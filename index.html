@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loki - Sauras-tu quelle est la fausse anecdote ?</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f2f2f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.card {
+    background: white;
+    padding: 40px;
+    width: 500px;
+    max-width: 90%;
+    text-align: center;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+h1 {
+    color: #8B0000;
+    margin-bottom: 10px;
+}
+
+button {
+    background-color: #8B0000;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    margin-top: 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+button:hover {
+    opacity: 0.85;
+}
+
+.answer-btn {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 12px;
+    border-radius: 6px;
+    border: 2px solid #8B0000;
+    background: white;
+    cursor: pointer;
+    transition: 0.2s;
+    color:black;
+}
+
+.answer-btn:hover {
+    background: #8B0000;
+    color: white;
+}
+
+.hidden {
+    display: none;
+}
+
+img {
+    max-width: 400px;
+    margin-top: 40px;
+}
+
+.logo {
+    display: block;
+    width: 100%;
+    max-width: 250px;
+    margin: 40px auto 20px auto;
+}
+
+#result-page {
+    text-align: center;
+}
+
+#result-image {
+    display: block;
+    max-width: 220px;
+    margin: 25px auto 20px auto;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <!-- PAGE ACCUEIL -->
+    <div id="start-page">
+        <img src="img-VF/AGR-logo.png" alt="Logo Art'Vengers" class="logo">
+        <h1>AGR</h1>
+        <p> Sauras-tu démêler la fausse de la vraie ? <br> <br> 3 anecdotes : 2 vraies, 1 fausse !</p>
+        <button onclick="startQuiz()">Art'vengers, rassemblement !</button>
+    </div>
+
+    <!-- QUIZ -->
+    <div id="quiz-page" class="hidden">
+        <p id="question-counter"></p>
+        <h2 id="question-text"></h2>
+        <div id="answers-container"></div>
+    </div>
+
+    <!-- RESULTATS -->
+    <div id="result-page" class="hidden">
+        <h1>Résultats</h1>
+        <div id="result-text"></div>
+        <img id="result-image" src="" alt="Super héros">
+        <button onclick="restartQuiz()">Recommencer</button>
+    </div>
+
+</div>
+
+<script>
+
+const questions = [
+{
+question: "Chloé",
+answers: [
+{ text: "Je me suis fait pipi dessus à la dernière SAT", hero: "false" },
+{ text: "J'ai vomi sur la muraille de Chine", hero: "true" },
+{ text: "J'ai la phobie du fromage", hero: "true" },
+]
+},
+{
+question: "Loup",
+answers: [
+{ text: "A", hero: "false" },
+{ text: "B", hero: "true" },
+{ text: "C", hero: "true" },
+]
+},
+{
+question: "Amélie",
+answers: [
+{ text: "Je suis championne départementale de salsa.", hero: "false" },
+{ text: "J'ai déjà avalé une barrette de cheveux.", hero: "true" },
+{ text: "Je me suis déjà faite courser par des babouins.", hero: "true" },
+]
+},
+{
+question: "Thomas",
+answers: [
+{ text: "Je joue mieux du trombone que de la flûte à bec", hero: "false" },
+{ text: "Je me suis déjà mis une mine avec un moine", hero: "true" },
+{ text: "J'ai 3 couilles", hero: "true" },
+]
+},
+{
+question: "Mateo",
+answers: [
+{ text: "A", hero: "false" },
+{ text: "B", hero: "true" },
+{ text: "C", hero: "true" },]
+},
+{
+question: "Gabriel",
+answers: [
+{ text: "A", hero: "false" },
+{ text: "B", hero: "true" },
+{ text: "C", hero: "true" },]
+},
+{
+question: "Maïwenn",
+answers: [
+{ text: "A", hero: "false" },
+{ text: "B", hero: "true" },
+{ text: "C", hero: "true" },]
+},
+{
+question: "Lucille",
+answers: [
+{ text: "J'ai fini 4ème aux championnats de France de karaté en cadets en - de 54 kg", hero: "false" },
+{ text: "Je me suis endormie dans ma baignoire au semi-ski", hero: "true" },
+{ text: "J'ai déjà choppé un mineur", hero: "true" },]
+},
+{
+question: "Hugo",
+answers: [
+{ text: "A", hero: "false" },
+{ text: "J'ai fait du stop de Rouen à Cologne en Allemagne", hero: "true" },
+{ text: "C", hero: "true" },]
+},
+{
+question: "Mélanie",
+answers: [
+{ text: "Un serpent m'a déjà mordu les fesses", hero: "false" },
+{ text: "B", hero: "true" },
+{ text: "Les flics m'ont déjà arrêté pcq j'avais volé un truc au supermarché", hero: "true" },]
+},
+{
+question: "Arthur",
+answers: [
+{ text: "J'ai appris à conduire à 12 ans", hero: "false" },
+{ text: "J'ai construit un canon à 8 ans", hero: "true" },
+{ text: "Je me suis fait une lésion du cuir chevelu en tombant de mon canapé", hero: "true" },]
+},
+{
+question: "Xavier",
+answers: [
+{ text: "A", hero: "false" },
+{ text: "B", hero: "true" },
+{ text: "C", hero: "true" },]
+},
+{
+question: "Emiko",
+answers: [
+{ text: "A", hero: "false" },
+{ text: "B", hero: "true" },
+{ text: "C", hero: "true" },]
+},
+{
+question: "Madeleine",
+answers: [
+{ text: "A", hero: "false" },
+{ text: "B", hero: "true" },
+{ text: "C", hero: "true" },]
+},
+{
+question: "Chiara",
+answers: [
+{ text: "J'ai travaillé avec Michou dans son fast-food", hero: "false" },
+{ text: "J'ai fait un stage à l'Elysée avec Emmanuel et Brigitte Macron", hero: "true" },
+{ text: "Mon frère travaille avec Djadja et Dinaz", hero: "true" },]
+},
+{
+question: "Assia",
+answers: [
+{ text: "A", hero: "false" },
+{ text: "B", hero: "true" },
+{ text: "C", hero: "true" },]
+},
+{
+question: "Elea",
+answers: [
+{ text: "Je me suis perdue dans le désert en balade à dos de chameaux au Maroc", hero: "false" },
+{ text: "Mes frères ont tiré sur des gens à la carabine", hero: "true" },
+{ text: "Je suis tombée dans une poubelle en pleine représentation de chant", hero: "true" },]
+},
+{
+question: "Pierre",
+answers: [
+{ text: "A", hero: "false" },
+{ text: "B", hero: "true" },
+{ text: "C", hero: "true" },]
+},
+{
+question: "Jane",
+answers: [
+{ text: "A", hero: "false" },
+{ text: "B", hero: "true" },
+{ text: "C", hero: "true" },]
+},
+{
+question: "Zoé :",
+answers: [
+{ text: ".", hero: "false" },
+{ text: "B", hero: "true" },
+{ text: "C", hero: "true" },]
+},
+];
+
+let currentQuestion = 0;
+let score = 0;
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+function startQuiz() {
+document.getElementById("start-page").classList.add("hidden");
+document.getElementById("quiz-page").classList.remove("hidden");
+showQuestion();
+}
+
+function showQuestion() {
+let q = questions[currentQuestion];
+shuffleArray(q.answers);
+document.getElementById("question-counter").innerText = "Question " + (currentQuestion+1) + " / 20";
+document.getElementById("question-text").innerText = q.question;
+
+let container = document.getElementById("answers-container");
+container.innerHTML = "";
+
+q.answers.forEach(answer => {
+let btn = document.createElement("button");
+btn.innerText = answer.text;
+btn.classList.add("answer-btn");
+btn.onclick = () => selectAnswer(answer.hero);
+container.appendChild(btn);
+});
+}
+
+function selectAnswer(hero) {
+    if (hero === "false") {
+        score++;   // +1 si le joueur a trouvé la fausse anecdote
+    }
+
+    currentQuestion++;
+
+    if (currentQuestion < questions.length) {
+        showQuestion();
+    } else {
+        showResult();
+    }
+}
+
+function showResult() {
+    document.getElementById("quiz-page").classList.add("hidden");
+    document.getElementById("result-page").classList.remove("hidden");
+
+    let resultText = `
+        Tu as trouvé ${score} bonne(s) réponse(s) sur ${questions.length}. <br><br>
+        ${score >= questions.length * 0.8 ? "Incroyable détective !" : "Pas mal ! 😎 <br> <br> Maintenant envoie un screen de ton score aux AGR sur Insta (@liste_bda_artvengers), la personne qui obtiendra le meilleur score aura une surprise... 🥳 <br> <br> On ne te donne pas la correction tout de suite au cas où tu veuilles recommencer le test... reste branché sur Insta !!"}
+    `;
+
+    document.getElementById("result-text").innerHTML = resultText;
+    document.getElementById("result-image").src = "img-VF/AGR-logo.png"; // image fixe ou vide
+}
+
+function restartQuiz() {
+    currentQuestion = 0;
+    score = 0;
+
+    document.getElementById("result-page").classList.add("hidden");
+    document.getElementById("start-page").classList.remove("hidden");
+}
+
+</script>
+
+</body>
+</html>
