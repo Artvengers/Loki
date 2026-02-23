@@ -196,7 +196,7 @@ answers: [
 question: "Mélanie",
 answers: [
 { text: "Un serpent m'a déjà mordu les fesses", hero: "false" },
-{ text: "B", hero: "true" },
+{ text: "J'ai déjà suivi un influenceur dans la rue", hero: "true" },
 { text: "Les flics m'ont déjà arrêté pcq j'avais volé un truc au supermarché", hero: "true" },]
 },
 {
@@ -265,7 +265,7 @@ answers: [
 {
 question: "Zoé :",
 answers: [
-{ text: ".", hero: "false" },
+{ text: "A", hero: "false" },
 { text: "B", hero: "true" },
 { text: "C", hero: "true" },]
 },
@@ -325,7 +325,7 @@ function showResult() {
 
     let resultText = `
         Tu as trouvé ${score} bonne(s) réponse(s) sur ${questions.length}. <br><br>
-        ${score >= questions.length * 0.8 ? "Incroyable détective !" : "Pas mal ! 😎 <br> <br> Maintenant envoie un screen de ton score aux AGR sur Insta (@liste_bda_artvengers), la personne qui obtiendra le meilleur score aura une surprise... 🥳 <br> <br> On ne te donne pas la correction tout de suite au cas où tu veuilles recommencer le test... reste branché sur Insta !!"}
+        ${score >= questions.length * 0.8 ? "Incroyable détective !" : "Pas mal ! 😎 <br> <br> Maintenant envoie un screen de ton score aux AGR sur Insta (@liste_bda_artvengers), la personne qui obtiendra le meilleur score aura une surprise... 🥳 <br> <br> On ne te donne pas la correction tout de suite au cas où tu veuilles recommencer le test... reste branché sur Insta ! <br> <br> Et n'hésite pas à parler des anecdotes à nos listeux pendant la JA !!"}
     `;
 
     document.getElementById("result-text").innerHTML = resultText;
